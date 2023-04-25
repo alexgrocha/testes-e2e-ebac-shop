@@ -26,7 +26,10 @@ cd testes-e2e-ebac-shop
 ```
 npm install 
 ```
-
+### Para o faker use a versão 5.5.3: 
+```
+npm install faker@5.5.3
+```
 #### Para executar em moodo Headlesss via console:
 ```
 npx cypress run

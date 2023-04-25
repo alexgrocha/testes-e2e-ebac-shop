@@ -1,5 +1,5 @@
 /// <reference types="cypress" />
-/*bibliotica para dados fake, necessário instalar antes*/
+/*bibliotica para dados fake, necessário instalar antes.*/
 import faker from 'faker';
 
 context('Exercicio - Testes End-to-end - Fluxo de pedido', () => {

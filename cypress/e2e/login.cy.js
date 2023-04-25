@@ -1,5 +1,6 @@
 /// <reference types = "cypress" />
 
+//automação tela login
 let dadosLogin
 
 context('Funcionalidade Login', () => {
