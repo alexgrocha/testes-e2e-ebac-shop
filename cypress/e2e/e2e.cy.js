@@ -1,6 +1,8 @@
 /// <reference types="cypress" />
 /*bibliotica para dados fake, necessário instalar antes.*/
 import faker from 'faker';
+import ProdutosPage from '../support/page_objects/lista-produtos.page';
+//import CheckoutPage from '../support/page_objects/checkout.page';
 
 context('Exercicio - Testes End-to-end - Fluxo de pedido', () => {
     /*  Como cliente 
@@ -15,51 +17,13 @@ context('Exercicio - Testes End-to-end - Fluxo de pedido', () => {
         cy.visit('/produtos')
     });
 
-    it('Deve fazer um pedido na loja Ebac Shop de ponta a ponta', () => {
-        var quantidade = 1
+    it('Fazer um pedido na loja Ebac Shop com massa de dados ponta a ponta', () => {
+        ProdutosPage.addListaProdutos()
 
-        //primeiro produto
-        cy.get('[class="product-block grid"]').contains('Abominable Hoodie').click()
-        cy.get('.button-variable-item-M').click()
-        cy.get('.button-variable-item-Blue').click()
-        // antes de incluir a qtd, necessário limpar o campo
-        cy.get('.input-text').clear().type(quantidade)
-        cy.get('.single_add_to_cart_button').click()
-        cy.get('.dropdown-toggle > .mini-cart-items').should('contain', quantidade)
-        //retorno esperado, produto adicionado no carrinho
-        cy.get('.woocommerce-message').should('contain', ' “Abominable Hoodie” foi adicionado no seu carrinho.')
-        //botão comprar parte superior da tela
-        cy.get('#primary-menu > .menu-item-629 > a').click()
-
-        //segundo produto
-        cy.get('[class="product-block grid"]').contains('Arcadio Gym Short').click()
-        cy.get('.button-variable-item-34').click()
-        cy.get('.button-variable-item-Red').click()
-        cy.get('.input-text').clear().type(quantidade)
-        cy.get('.single_add_to_cart_button').click()
-        cy.get('#primary-menu > .menu-item-629 > a').click()
-
-        //terceiro produto
-        cy.get('[class="product-block grid"]').contains('Atlas Fitness Tank').click()
-        cy.get('.button-variable-item-XS').click()
-        cy.get(':nth-child(2) > .value > .variable-items-wrapper > .variable-item').click()
-        cy.get('.input-text').clear().type(quantidade)
-        cy.get('.single_add_to_cart_button').click()
-        cy.get('.woocommerce-message').should('contain', ' “Atlas Fitness Tank” foi adicionado no seu carrinho.')
-        
-        //mudando de pagina
-        cy.get('#primary-menu > .menu-item-629 > a').click()
-        cy.get(':nth-child(2) > .page-numbers').click
-
-        //quarto produto
-        cy.get('[class="product-block grid"]').contains('Atlas Fitness Tank').click()
-        cy.get('.button-variable-item-M').click()
-        cy.get('.button-variable-item-Blue').click()
-        cy.get('.input-text').clear().type(quantidade)
-        cy.get('.single_add_to_cart_button').click()
+        //Checkout 
         cy.get('.dropdown-toggle > .text-skin > .icon-basket').click()
         cy.get('#cart > .dropdown-menu > .widget_shopping_cart_content > .mini_cart_content > .mini_cart_inner > .mcart-border > .buttons > .checkout').click()
-   
+        
         //utilizando dados fakes
         let nomeFaker = faker.name.firstName()
         let sobrenomeFaker = faker.name.lastName()
@@ -79,6 +43,7 @@ context('Exercicio - Testes End-to-end - Fluxo de pedido', () => {
         cy.get('#place_order').click()
         
         //validando pedido
-        cy.get('.woocommerce-notice').should('contain', 'Obrigado. Seu pedido foi recebido.')
+        cy.get('.woocommerce-notice').should('contain', 'Obrigado. Seu pedido foi recebido.')     
+
     });
 });
