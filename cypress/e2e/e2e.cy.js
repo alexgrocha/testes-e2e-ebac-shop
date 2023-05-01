@@ -1,8 +1,6 @@
 /// <reference types="cypress" />
 /*bibliotica para dados fake, necessário instalar antes.*/
 import faker from 'faker';
-import ProdutosPage from '../support/page_objects/lista-produtos.page';
-//import CheckoutPage from '../support/page_objects/checkout.page';
 
 context('Exercicio - Testes End-to-end - Fluxo de pedido', () => {
     /*  Como cliente 
@@ -12,38 +10,37 @@ context('Exercicio - Testes End-to-end - Fluxo de pedido', () => {
         Adicionando ao carrinho
         Preenchendo todas opções no checkout
         E validando minha compra ao final */
-
+    
+    // utilizando Hooks, conceito para diminuir a quantidade de linhas iguais, por exemplo para 
+    // acessar a pagina de produtos
     beforeEach(() => {
         cy.visit('/produtos')
     });
 
     it('Fazer um pedido na loja Ebac Shop com massa de dados ponta a ponta', () => {
-        ProdutosPage.addListaProdutos()
-
-        //Checkout 
-        cy.get('.dropdown-toggle > .text-skin > .icon-basket').click()
-        cy.get('#cart > .dropdown-menu > .widget_shopping_cart_content > .mini_cart_content > .mini_cart_inner > .mcart-border > .buttons > .checkout').click()
+        //listra de produtos
+        //ProdutosPage.addListaProdutos()
+        cy.addProdutos('Abominable Hoodie', 1)
+        cy.addProdutos('Atlas Fitness Tank', 1)
+        cy.addProdutosP2('Atomic Endurance Running Tee (Crew-Neck)', 1)
+        cy.addProdutosP2('Augusta Pullover Jacket', 1)
         
         //utilizando dados fakes
         let nomeFaker = faker.name.firstName()
         let sobrenomeFaker = faker.name.lastName()
-        let emailFaker = faker.internet.email()
-
-        cy.get('#billing_first_name').type(nomeFaker)
-        cy.get('#billing_last_name').type(sobrenomeFaker)
-        cy.get('#billing_company').type('EBAC-SHOP')
-        cy.get('#select2-billing_country-container').click().type('Brasil').click()
-        cy.get('#billing_address_1').type('Av Brasil')
-        cy.get('#billing_city').type('Americana')
-        cy.get('#select2-billing_state-container').click().type('São Paulo').click()
-        cy.get('#billing_postcode').type('13068-875')
-        cy.get('#billing_phone').type('9999-9999')
-        cy.get('#billing_email').type(emailFaker)
-        cy.get('#terms').click()
-        cy.get('#place_order').click()
-        
-        //validando pedido
-        cy.get('.woocommerce-notice').should('contain', 'Obrigado. Seu pedido foi recebido.')     
-
+        let emailFaker = faker.internet.email(nomeFaker)
+        //Checkout 
+        cy.get('.dropdown-toggle > .text-skin > .icon-basket').click()
+        cy.get('#cart > .dropdown-menu > .widget_shopping_cart_content > .mini_cart_content > .mini_cart_inner > .mcart-border > .buttons > .checkout').click()
+        cy.checkout(nomeFaker, 
+                   sobrenomeFaker, 
+                   'EBAC-SHOP', 
+                   'Brasil', 
+                   'Av Brasil', 
+                   'Americana', 
+                   'São Paulo', 
+                   '13068-875', 
+                   '9999-9999', 
+                   emailFaker)          
     });
 });

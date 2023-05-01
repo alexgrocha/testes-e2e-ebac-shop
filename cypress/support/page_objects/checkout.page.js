@@ -1,6 +1,8 @@
 
+// NÃO ESTA SENDO UTLIZADO ESTA CLASS PARA INCLUIR OS PRODUTOS!
+
 class CheckoutLoja {
-/*
+
     checkoutteste(){
    
         //ações do método.
@@ -25,6 +27,6 @@ class CheckoutLoja {
         //validando pedido
         cy.get('.woocommerce-notice').should('contain', 'Obrigado. Seu pedido foi recebido.')        
     }
-    */
+    
 }
 export default new CheckoutLoja()

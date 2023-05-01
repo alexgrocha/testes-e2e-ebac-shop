@@ -1,3 +1,6 @@
+
+// NÃO ESTA SENDO UTLIZADO ESTA CLASS PARA INCLUIR OS PRODUTOS!
+
 class ListaProdutos {
 
     addListaProdutos() {
