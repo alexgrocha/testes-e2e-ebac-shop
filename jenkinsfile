@@ -2,11 +2,22 @@ pipeline{
     agent any
 
     stages{
-        stage('Setup'){
-            sh 'npm install'
+        stage('Clonar o repositório, instalar dependências!'){
+            steps{
+                git branch: 'main', url: 'https://github.com/alexgrocha/testes-e2e-ebac-shop.git'
+                sh 'npm install'
+            }
         }
-        stage('Test'){
-            sh 'npm run cy:run'
+        stage('Abrir Servidor'){
+            steps{
+                sh 'NO_COLOR=1 npm run cy:run | true'
+                sh 'npm run cy:report'
+            }
         }
-    }
+        stage('Report'){
+            steps {
+                publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: 'mochawesome-report', reportFiles: 'report.html', reportName: 'Teste E2E Ebac Shop tarefa 12', reportTitles: '', useWrapperFileDirectly: true])
+            }
+        }
+    }    
 }

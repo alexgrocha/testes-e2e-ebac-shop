@@ -6,9 +6,10 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "cy:open": "npx cypress open",
-    "cy:run": "npx cypress run",
+    "cy:run": "npx cypress run --browser chrome",
     "cy:dashboard": "",
-    "cy:report": ""
+    "start": "npx serverest",
+    "cy:report": "npx mochawesome-merge ./mochawesome-report/mochawesome*.json  > mochawesome-report/report.json && npx marge mochawesome-report/report.json"
   },
   "repository": {
     "type": "git",
@@ -26,6 +27,9 @@
     "cypress": "^12.10.0"
   },
   "dependencies": {
-    "faker": "^5.5.3"
+    "faker": "^5.5.3",
+    "mocha": "^10.2.0",
+    "mochawesome-merge": "^4.3.0",
+    "mochawesome-report-generator": "^6.2.0"
   }
 }
