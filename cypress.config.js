@@ -6,5 +6,12 @@ module.exports = {
       return require('./cypress/plugins/index.js')(on, config)
     },
     baseUrl: 'http://lojaebac.ebaconline.art.br/',
+    "reporter": "mochawesome",
+    "reporterOptions": {
+      "reportDir": "mochawesome-report",
+      "overwrite": false,
+      "html": false,
+      "json": true
+    },
   },
 }
